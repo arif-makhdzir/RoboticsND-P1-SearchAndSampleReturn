@@ -58,19 +58,19 @@ Here I'll talk about the approach I took, what techniques I used, what worked an
 
 #### Step-by-step walkthrough of `perception_step()`
 
-1) Step 1: Perspective transform
+Step 1: Perspective transform
 First step is to do perspective transform so we can get a bird's eye view point of view of the camera's image. Getting bird's eye view POV is a crucial first step for our perception task of localization, mapping, and navigation.
 
-Perspective transform settings:
-i) Four source points:
-[14,140]
-[301,140]
-[200,96]
-[118,96]
+Perspective transform settings:<br>
+i) Four source points:<br>
+`[14,140]`<br>
+`[301,140]`<br>
+`[200,96]`<br>
+`[118,96]`<br>
 
-ii) Destination points formula:
-dst_size = 5 
-bottom_offset = 6
+ii) Destination points formula:<br>
+`dst_size = 5`<br> 
+`bottom_offset = 6`<br>
 
 destination = np.float32([[Rover.img.shape[1]/2 - dst_size, Rover.img.shape[0] - bottom_offset],
                       [Rover.img.shape[1]/2 + dst_size, Rover.img.shape[0] - bottom_offset],
@@ -80,29 +80,29 @@ destination = np.float32([[Rover.img.shape[1]/2 - dst_size, Rover.img.shape[0] -
 
 Here is the result after perspective transform with the above setting is applied:
 
-<img src="">
+<img src="output/warped_example.jpg">
     
 2) Step 2: Apply color threshold to identify navigable terrain, obstacles, and rock samples
 
-I modified the color trashold function so that it can pick up a color channel within a minimum and maximum treshold. This is required in order to treshold rock samples & obstacles from the image. Note that I used color picker in photoshop in order to gauge each RGB channel's range of color for the rock sample & obstacle. Below are respective settings for each color treshold applications:
+I modified the color trashold function so that it can pick up a color channel within a minimum and maximum treshold. This is required in order to treshold rock samples & obstacles from the image. Note that I used color picker in photoshop in order to gauge each RGB channel's range of color for the rock sample & obstacle. Below are my final respective settings for each color treshold applications:
 
-i) Navigable terrain
-Min Treshold: 160, 160, 160
-Max Treshold: 255, 255, 255
+i) Navigable terrain<br>
+Min Treshold: 160, 160, 160<br>
+Max Treshold: 255, 255, 255<br>
 
-<img src="">
+<img src="output/nav_terrain-treshed.jpg">
 
-ii) Obstacles
-Min Treshold: 0, 0, 0
-Max Treshold: 159, 159, 159
+ii) Obstacles<br>
+Min Treshold: 0, 0, 0<br>
+Max Treshold: 159, 159, 159<br>
 
-<img src="">
+<img src="output/obstacle_treshed.jpg">
 
-iii) Rock samples
-Min Treshold: 100, 100, 0
-Max Treshold: 200, 200, 60
+iii) Rock samples<br>
+Min Treshold: 100, 100, 0<br>
+Max Treshold: 200, 200, 60<br>
 
-<img src="">
+<img src="output/rock_treshed.jpg">
 
 3) Step 3: Update Rover.vision_image (this will be displayed on left side of screen) 
 

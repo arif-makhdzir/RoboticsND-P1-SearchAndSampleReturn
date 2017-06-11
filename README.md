@@ -59,7 +59,7 @@ See section below for analysis of color selection.
 #### Simulator Settings
 Resoultion: 1280x1024 (Windowed)<br>
 Graphics quality: Fantastic<br>
-FPS: 6-8<b>
+FPS: 6-8
 
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  

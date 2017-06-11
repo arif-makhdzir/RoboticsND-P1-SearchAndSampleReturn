@@ -56,6 +56,12 @@ See section below for analysis of color selection.
 
 **Note: running the simulator with different choices of resolution and graphics quality may produce different results, particularly on different machines!  Make a note of your simulator settings (resolution and graphics quality set on launch) and frames per second (FPS output to terminal by `drive_rover.py`) in your writeup when you submit the project so your reviewer can reproduce your results.**
 
+#### Simulator Settings
+<b>Resoultion: 1280x1024 (Windowed)<br>
+Graphics quality: Fantastic<br>
+FPS: 6-8<b>
+
+
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
 #### Step-by-step walkthrough of `perception_step()`
@@ -140,13 +146,13 @@ Crucial to get the angle of steer
     rock_dist, rock_angles = to_polar_coords(xpix_rock, ypix_rock)
 
 
-Where the pipeline might fail.
+#### Where the pipeline might fail.
 1. Terrain, obstacle and rocks of varying color than the one in the simulator - We are relying on color treshold to pick out navigable terrain, obstacle, and rock sample, thus if the rock sample is of similar color to the obstacle then the rover won't be able to spot it. Same goes for navigable terrain, if the sand/soil of the terrain is darker and fall within range of the color of the mountains, the pipeline will breakdown.
 2. If there are small rocks in front of the rover, the rover won't be able to evade them due to the simplistic maximum treshold of sum of navigable terrains for stopping decision algorithm that I used
 3. The rover might go in circle and explore only certain parts of the map, this is due to the simplistic random +15/-15 from mean average navigable terrain steering co-efficient when going forward. There was no path planning capability at all.
 4. Terrain with steep gradient, either downhill or uphill - Terrain with steep gradient will pose a problem to the pipeline, as the warp transformation we are doing is making an assumption that the land is flat. So if the land is not flat, than the mapping localization might go wrong and the judgement of distant from the rover's polar co-ordinate will also be wrong, thus causing lots of problem for the rover's navigation and sample return.
 
-How I might improve it?
+#### How I might improve it?
 1. Change color treshold to image segmentation deep neural network in order to identify navigable terrain, obstacle, and rock sample. Image segmentation neural network will allow more complex features to be detected other than just color tresholding, and better still we don't have to hand-craft the features, the neural network will learn by itself; the only downside is a deep neural network will require a lot of data for it to be able to be trained properly, although we might be able to laverage on transfer learning in order to mitigate that.
 2. The better method is to sum navigable terrains that are only above certain amount of distance in polar coordinate or certain y+ pixels in normal coordinate, as a rock in front of the rover will drastically reduce the navigable terrain in the distance (think of it as it blocks the horizon of navigable terrain).
 3. Use a path planning algorithm like A* that will systematically plan to navigate unchartered navigable terrain.

@@ -140,4 +140,10 @@ Crucial to get the angle of steer
     rock_dist, rock_angles = to_polar_coords(xpix_rock, ypix_rock)
 
 
+Where the pipeline might fail.
+1. Terrain, obstacle and rocks of varying color than the one in the simulator - We are relying on color treshold to pick out navigable terrain, obstacle, and rock sample, thus if the rock sample is of similar color to the obstacle then the rover won't be able to spot it. Same goes for navigable terrain, if the sand/soil of the terrain is darker and fall within range of the color of the mountains, the pipeline will breakdown.
+2. Terrain with steep gradient, either downhill or uphill - Terrain with steep gradient will pose a problem to the pipeline, as the warp transformation we are doing is making an assumption that the land is flat. So if the land is not flat, than the mapping localization might go wrong and the judgement of distant from the rover's polar co-ordinate will also be wrong, thus causing lots of problem for the rover's navigation and sample return.
 
+How I might improve it?
+1. Change color treshold to image segmentation deep neural network in order to identify navigable terrain, obstacle, and rock sample. Image segmentation neural network will allow more complex features to be detected other than just color tresholding, and better still we don't have to hand-craft the features, the neural network will learn by itself; the only downside is a deep neural network will require a lot of data for it to be able to be trained properly, although we might be able to laverage on transfer learning in order to mitigate that.
+2. Firstly the rover should have a gyroscope so that not only we know the yaw angle of the rover, we also need to know the verticle degree of the rover. Secondly we need a depth sensing sensors, maybe a stereo camera, or sonar, or lidar, so we can judge depth and able to map out if the terrain is curving up or down. 

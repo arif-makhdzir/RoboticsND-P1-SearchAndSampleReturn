@@ -62,7 +62,9 @@ Graphics quality: Fantastic<br>
 FPS: 6-8
 
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further. 
+
+Note that I did not make any change to decision_step(), I plan to if I have time in the future, but for now it meets the project rubric requirement as is with my simulator on my computer.
 
 #### Step-by-step walkthrough of `perception_step()`
 

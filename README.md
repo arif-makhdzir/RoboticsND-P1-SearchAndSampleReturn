@@ -57,7 +57,7 @@ See section below for analysis of color selection.
 **Note: running the simulator with different choices of resolution and graphics quality may produce different results, particularly on different machines!  Make a note of your simulator settings (resolution and graphics quality set on launch) and frames per second (FPS output to terminal by `drive_rover.py`) in your writeup when you submit the project so your reviewer can reproduce your results.**
 
 #### Simulator Settings
-Resoultion: 1280x1024 (Windowed)<br>
+Resolution: 1280x1024 (Windowed)<br>
 Graphics quality: Fantastic<br>
 FPS: 6-8
 

@@ -132,20 +132,24 @@ This step allows us to localize ourselves with respect to the ground truth map, 
 Involve rotation according to the rover's yaw angle and translation according to the rover's position vector.
            
 #### Step 6: Update Rover worldmap (to be displayed on right side of screen)
-The rover's worldmap convention for this project is red channel (0) for obstacle and Blue channel (2) for navigable terrain.
+The rover's worldmap convention for this project is red channel (Channel 0) for obstacle and Blue channel (Channel 2) for navigable terrain. I find that the below formula gave me the best fidelity, the logic of using 255 is that's the max value for the red/blue channel:
     Rover.worldmap[y_pix_obs_world, x_pix_obs_world, 0] += 255
     Rover.worldmap[y_pix_obs_world, x_pix_obs_world, 2] -= 255    
     Rover.worldmap[y_pix_world, x_pix_world, 2] += 255
     Rover.worldmap[y_pix_world, x_pix_world, 0] -= 255
 
-The Green channel (1) is used for the rock sample marking and I added +1 to the world map's channel 1 for rock's world pixels as the drive rover function only check for binary (0 or 1) for the rock's pixel marking: 
+The Green channel (Channel 1) is used for the rock sample marking and I added +1 to the world map's channel 1 for rock's world pixels as the drive rover function only check for binary (0 or 1) for the rock's pixel marking: 
 
     Rover.worldmap[y_pix_rock_world, x_pix_rock_world, 1] += 1
 
 #### Step7: Convert rover-centric pixel positions to polar coordinates
-Crucial to get the angle of steer
+Crucial to get the angle of steer and distance to obstacle/rock. The rover's navigation distance and angle is updated based on the mean average angle of navigable terrain and disance. 
+
     rover_dist, rover_angles = to_polar_coords(xpix, ypix)
     rock_dist, rock_angles = to_polar_coords(xpix_rock, ypix_rock)
+     
+    Rover.nav_dists = rover_dist
+    Rover.nav_angles = rover_angles
 
 
 #### Where the pipeline might fail.

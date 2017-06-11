@@ -26,7 +26,7 @@
 [image2]: ./calibration_images/example_grid1.jpg
 [image3]: ./calibration_images/example_rock1.jpg 
 
-## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
+## [Rubric Points](https://review.udacity.com/#!/rubrics/916/view)
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ---
@@ -38,14 +38,13 @@ You're reading it!
 
 ### Notebook Analysis
 #### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
-Here is an example of how to include an image in your writeup.
 
-![alt text][image1]
+See section below for analysis of color selection.
 
 #### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
-And another! 
 
-![alt text][image2]
+`Process_image()` is similar to `perception_step()`, see section below for `perception_step()` analysis.
+
 ### Autonomous Navigation and Mapping
 
 #### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
@@ -56,6 +55,8 @@ And another!
 **Note: running the simulator with different choices of resolution and graphics quality may produce different results, particularly on different machines!  Make a note of your simulator settings (resolution and graphics quality set on launch) and frames per second (FPS output to terminal by `drive_rover.py`) in your writeup when you submit the project so your reviewer can reproduce your results.**
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+
+#### Step-by-step walkthrough of `perception_step()`
 
 1) Step 1: Perspective transform
 First step is to do perspective transform so we can get a bird's eye view point of view of the camera's image. Getting bird's eye view POV is a crucial first step for our perception task of localization, mapping, and navigation.

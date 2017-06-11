@@ -58,7 +58,7 @@ Here I'll talk about the approach I took, what techniques I used, what worked an
 
 #### Step-by-step walkthrough of `perception_step()`
 
-Step 1: Perspective transform
+#### Step 1: Perspective transform
 First step is to do perspective transform so we can get a bird's eye view point of view of the camera's image. Getting bird's eye view POV is a crucial first step for our perception task of localization, mapping, and navigation.
 
 Perspective transform settings:<br>
@@ -82,7 +82,7 @@ Here is the result after perspective transform with the above setting is applied
 
 <img src="output/warped_example.jpg">
     
-2) Step 2: Apply color threshold to identify navigable terrain, obstacles, and rock samples
+#### Step 2: Apply color threshold to identify navigable terrain, obstacles, and rock samples
 
 I modified the color trashold function so that it can pick up a color channel within a minimum and maximum treshold. This is required in order to treshold rock samples & obstacles from the image. Note that I used color picker in photoshop in order to gauge each RGB channel's range of color for the rock sample & obstacle. Below are my final respective settings for each color treshold applications:
 
@@ -90,38 +90,38 @@ i) Navigable terrain<br>
 Min Treshold: 160, 160, 160<br>
 Max Treshold: 255, 255, 255<br>
 
-<img src="output/nav_terrain-treshed.jpg">
+<img src="output/nav_terrain_threshed.jpg">
 
 ii) Obstacles<br>
 Min Treshold: 0, 0, 0<br>
 Max Treshold: 159, 159, 159<br>
 
-<img src="output/obstacle_treshed.jpg">
+<img src="output/obstacle_threshed.jpg">
 
 iii) Rock samples<br>
 Min Treshold: 100, 100, 0<br>
 Max Treshold: 200, 200, 60<br>
 
-<img src="output/rock_treshed.jpg">
+<img src="output/rock_threshed.jpg">
 
-3) Step 3: Update Rover.vision_image (this will be displayed on left side of screen) 
+#### Step 3: Update Rover.vision_image (this will be displayed on left side of screen) 
 
 See the code, very straightforward.
 
-5) Step 4: Convert map image pixel values to rover-centric coords
+#### Step 4: Convert map image pixel values to rover-centric coords
 
 This step is done by calculating pixel positions with reference to the rover position being at the center bottom of the image.
 
 
 This step is done so that we can understand the image with respect to the rover's coordinate, which will allow us to navigate later on  
 
-5) Step 5:  Convert rover-centric pixel values to world coordinates     
+#### Step 5:  Convert rover-centric pixel values to world coordinates     
 
 This step allows us to localize ourselves with respect to the ground truth map, which is a crucial step in our perception task.
 
 Involve rotation according to the rover's yaw angle and translation according to the rover's position vector.
            
-7) Step 6: Update Rover worldmap (to be displayed on right side of screen)
+#### Step 6: Update Rover worldmap (to be displayed on right side of screen)
 The rover's worldmap convention for this project is red channel (0) for obstacle and Blue channel (2) for navigable terrain.
     Rover.worldmap[y_pix_obs_world, x_pix_obs_world, 0] += 255
     Rover.worldmap[y_pix_obs_world, x_pix_obs_world, 2] -= 255    
@@ -132,7 +132,7 @@ The Green channel (1) is used for the rock sample marking and I added +1 to the 
 
     Rover.worldmap[y_pix_rock_world, x_pix_rock_world, 1] += 1
 
-    # 8) Convert rover-centric pixel positions to polar coordinates
+#### Step7: Convert rover-centric pixel positions to polar coordinates
 Crucial to get the angle of steer
     rover_dist, rover_angles = to_polar_coords(xpix, ypix)
     rock_dist, rock_angles = to_polar_coords(xpix_rock, ypix_rock)
